@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  dockertestwebfront:
+    container_name: dockertestwebfront
+    image: ${DOCKER_REGISTRY-}dockertestwebfront
+    build:
+      context: .
+      dockerfile: DockerTestWebFront/Dockerfile
+
+  dockertestwebapi:
+    container_name: dockertestwebapi
+    image: ${DOCKER_REGISTRY-}dockertestwebapi
+    build:
+      context: .
+      dockerfile: DockerTestWebApi/Dockerfile
+

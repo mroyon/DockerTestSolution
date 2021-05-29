@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  dockertestwebapi:
+    image: dockertestwebapi:dev
+    build:
+      target: base
+      labels:
+        com.microsoft.created-by: "visual-studio"
+        com.microsoft.visual-studio.project-name: "DockerTestWebApi"
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
+      #- NUGET_FALLBACK_PACKAGES=$container_paths_to_fallback_packages_dockertestwebapi$
+    volumes:
+      - C:\DockerTestSolution\DockerTestSolution\DockerTestWebApi:/app
+      - C:\DockerTestSolution\DockerTestSolution:/src
+      - C:\Users\royon\vsdbg\vs2017u5:/remote_debugger:rw
+#$nuget_volume_mapping_dockertestwebapi$
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+    entrypoint: tail -f /dev/null
+    labels:
+      com.microsoft.visualstudio.debuggee.program: "dotnet"
+      #com.microsoft.visualstudio.debuggee.arguments: " $debuggee_arguments_probing_paths_dockertestwebapi$ \"/app/bin/Debug/netcoreapp3.1/DockerTestWebApi.dll\""
+      com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
+      com.microsoft.visualstudio.debuggee.killprogram: "/bin/sh -c \"if PID=$$(pidof dotnet); then kill $$PID; fi\""
+    tty: true
+  dockertestwebfront:
+    image: dockertestwebfront:dev
+    build:
+      target: base
+      labels:
+        com.microsoft.created-by: "visual-studio"
+        com.microsoft.visual-studio.project-name: "DockerTestWebFront"
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
+      #- NUGET_FALLBACK_PACKAGES=$container_paths_to_fallback_packages_dockertestwebfront$
+    volumes:
+      - C:\DockerTestSolution\DockerTestSolution\DockerTestWebFront:/app
+      - C:\DockerTestSolution\DockerTestSolution:/src
+      - C:\Users\royon\vsdbg\vs2017u5:/remote_debugger:rw
+#$nuget_volume_mapping_dockertestwebfront$
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+    entrypoint: tail -f /dev/null
+    labels:
+      com.microsoft.visualstudio.debuggee.program: "dotnet"
+      #com.microsoft.visualstudio.debuggee.arguments: " $debuggee_arguments_probing_paths_dockertestwebfront$ \"/app/bin/Debug/netcoreapp3.1/DockerTestWebFront.dll\""
+      com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
+      com.microsoft.visualstudio.debuggee.killprogram: "/bin/sh -c \"if PID=$$(pidof dotnet); then kill $$PID; fi\""
+    tty: true

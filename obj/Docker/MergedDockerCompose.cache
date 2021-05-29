@@ -1,0 +1,30 @@
+services:
+  dockertestwebapi:
+    build:
+      context: C:\DockerTestSolution\DockerTestSolution
+      dockerfile: DockerTestWebApi/Dockerfile
+    container_name: dockertestwebapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: dockertestwebapi
+    ports:
+    - 192.168.8.109:44381:80/tcp
+    - 192.168.8.109:44325:443/tcp
+    volumes:
+    - C:\Users\royon\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+  dockertestwebfront:
+    build:
+      context: C:\DockerTestSolution\DockerTestSolution
+      dockerfile: DockerTestWebFront/Dockerfile
+    container_name: dockertestwebfront
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: dockertestwebfront
+    ports:
+    - 192.168.8.109:44380:80/tcp
+    - 192.168.8.109:44324:443/tcp
+    volumes:
+    - C:\Users\royon\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+version: '3.4'
